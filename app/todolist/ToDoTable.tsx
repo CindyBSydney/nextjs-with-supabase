@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { ToDoDialog } from "./ToDoDialog";
-
+import { ToDoEdit } from "./ToDoEdit"; 
 //[{"id":1,"created_at":"2024-04-24T09:31:08+00:00","title":"Display TODO in NextJS","priority":0,"done":false}]
 
 type Props = {
@@ -19,20 +19,10 @@ type Props = {
 };
 
 function ToDoTable({ table }: Props) {
-  const [task, setTask] = useState<string>("");
+  const [task, setTask] = useState<string>(""); // task is a string that is used to set the task
   const supabase = createClient();
 
-  async function edit(
-    id: number,
-    title: string,
-    priority: number,
-    done: boolean
-  ) {
-    const { error } = await supabase
-      .from("TODO")
-      .update({ title, priority, done })
-      .eq("id", id);
-  }
+
   async function remove(id: number) {
     const { error } = await supabase
     .from("TODO")
@@ -63,20 +53,17 @@ function ToDoTable({ table }: Props) {
               <TableCell>{todo.priority}</TableCell>
               <TableCell>{todo.done}</TableCell>
               <TableCell>
-                <Button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                  onClick={() => {
-                    edit(todo.id, todo.title, todo.priority, !todo.done);
-                  }}
-                >
-                  Edit
-                </Button>
-                <Button
+
+                <Button style={{ marginRight: "10px"}}
                   className="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                   onClick={() => remove(todo.id)}
                 >
                   Delete
                 </Button>
+
+                <ToDoEdit tasks={table} setTask={setTask} />
+
+
               </TableCell>
             </TableRow>
           ))}

@@ -59,7 +59,7 @@ import {
                             onChange={(e) => setPriority(parseInt(e.target.value))}
                         />
                     </label>
-                    <Button className=" bg-red-500" onClick={() => handleCreate(title, priority)}>Add</Button>
+                    <Button className=" bg-green-500" onClick={() => handleCreate(title, priority)}>Add</Button>
                 </DialogContent>
                 {/* <DialogFooter>
                     <Button className=" bg-red-500" onClick={() => handleCreate(title, priority)}>Add</Button>
